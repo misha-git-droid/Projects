@@ -11,7 +11,8 @@ class ShowBits {
 	}
 	
 	void show(long val) {
-		long mask = 1;
+		var mask = 1L;
+		
 		
 		mask <<= numbits-1;
 		
