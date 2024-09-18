@@ -3,4 +3,5 @@ interface UI {
 	void count_sugar();
 	void payment();
 	void order();
+	void cooking_coffee(Person person);
 }
