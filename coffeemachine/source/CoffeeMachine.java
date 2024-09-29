@@ -1,25 +1,40 @@
-class CoffeeMachine implements UI {
+/*
+	Функции, которые хочу внести:
+	1. Создание класса банка 
+		- Переменная для хранения только электронных финансов person
+		- Хранение списка клиентов банка (объект person, логин, пароль)
+		- 
+	2. Администратор person, обладающий возможностью снятия денег с банкомата
+	3. Надо вычитать значения кофе и молока, если напиток оплачен!
+	
+
+*/
+
+class CoffeeMachine implements UI, Service {
 	
 	
 	//boolean err;
 	private int power = 0;
 	private int intermediate_storage;
-	final int COFFEE = 1000;
+	private int storage_money = 0;
+	private int coffee = 1000;
 	final int MAX_STORAGE_MONEY = 1000;
-	private int min_storage_money = 0;
-	final int MILK = 1000;
-	CoffeeMachine cm;
+	private int milk = 1000;
+	public static CoffeeMachine cm;
+	private boolean normal = true; //состояние кофемашины. Указывается для тестов
 	
-	private static Coffee[] list_coffee = {new Coffee("Cappucino", 6, 3, 20), new Coffee("Latte", 6, 2, 15), new Coffee("Americano", 0, 3, 10)};
+	private static Coffee[] list_coffee = {new Coffee("Cappucino", 50, 30, 25), new Coffee("Latte", 43, 75, 66), new Coffee("Espresso", 55, 23, 11)};
 	
 	public static void main (String [] args) {
 		
 		
 		cm = new CoffeeMachine();
 		//cm.go();
-		Person p = new Person("Andrew", 100, list_coffee[0], false);
+		Person p = new Person(100);
+		p.getDataAboutPerson(); 
 		Coffee c = cm.choose_coffee(p);
 		cm.cooking_coffee(p);
+		
 		
 	}
 	
@@ -36,30 +51,24 @@ class CoffeeMachine implements UI {
 	
 	public void cooking_coffee(Person person) {
 		Coffee c = person.getCoffee();
-		if ((c.milk > MILK) | (c.coffee > COFFEE)) {
-			System.out.println("There are not enough ingredients!");
+		try {
+			if ((c.milk > milk) | (c.coffee > coffee)) {
+				throw new CMErr(2);
+			}
+		}
+		catch (CMErr exc) {
+			System.out.println(exc);
 			return;
 		}
 		
-		System.out.println("There are enough ingredients"); //test
-		
-		if (!person.buy()) {
-			System.out.println("Not enough money!");
+		System.out.println("There are enough ingredients"); 
+		try {
+			payment(person);
+		}
+		catch (USErr | CMErr exc) {
+			System.out.println(exc);
 			return;
 		}
-		
-		System.out.println("There are enough money"); //test
-		
-		intermediate_storage += c.cost;
-		
-		System.out.println("The money is credited to the intermediate storage");
-		
-		if (chkErr == -1) {
-			//intermediate_storage -= c.cost;
-			System.out.println("The refund process has been launched...");
-			cm.back_money(person);
-		}
-		
 		
 		System.out.println("Making a drink...");
 		
@@ -67,28 +76,74 @@ class CoffeeMachine implements UI {
 	}
 	
 	void back_money(Person p) {
+		//System.out.println("TEST/METH BACK_MONEY!");
+		p.add_money(intermediate_storage);
+		intermediate_storage = 0;
+		
 		System.out.println("Money refund!");
-		p.setLastDebt(intermediate_storage)
 	}
+	
+	public void payment(Person p) throws CMErr,  USErr {
+		try {
+			p.buy(); 
+		}
+		catch (USErr exc) {
+			throw exc;
+			//return;
+		}
+		
+		System.out.println("There are enough money"); 
+		
+		intermediate_storage += p.getCoffee().cost;
+		
+		System.out.println("The money is credited to the intermediate storage");
+		
+		
+		if (!normal) {
+			System.out.println("TEST/METH CHKERROR!");
+			System.out.println("The refund process has been launched...");
+			back_money(p);
+			throw new CMErr(4);
+			//return;
+		}
+		
+		storage_money = intermediate_storage;
+		System.out.println("The money was credited to the account of the coffee machine");
+	}
+		
+
+		
+	
 	
 	public void count_sugar() {
 		
 	}
 	
-	public void payment() {
-		
+	public Coffee[] getListCoffee() {
+		return list_coffee;
 	}
+	
+	public CoffeeMachine getCM() {
+		return cm;
+	}
+	
+	
 	
 	public void order() {
 		
 	}
 	
-	void generate_code_transaction() {
+	/* 
+		
+	void generate_transaction() {
 		
 	}
+	*/
+	
 	
 	int chkErr() {
-		return 0;
+		//return -1;
+		return 1;
 	}
 	
 	

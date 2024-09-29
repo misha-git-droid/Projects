@@ -1,6 +1,6 @@
 class Person {
 	
-	private lastdebt;
+	private int lastdebt;
 	private String name;
 	private int money;
 	private Coffee favorite_coffee;
@@ -8,23 +8,36 @@ class Person {
 	int sugar;
 	//private int[] codes_transactions;
 	
+	private CoffeeMachine newcm = new CoffeeMachine(); 
 	
-	Person (String n, int m, Coffee c, boolean admin) {
-		name = n;
-		money = m;
-		favorite_coffee = c;
+	String[] list_name = {"Derek", "Alice", "Andrew", "Carol", "James", "Alex"};
+	
+	Person () {
+		name = list_name[Service.generateValue(list_name.length - 1)];
+		money = Service.generateValue(350);
+		newcm = newcm.getCM(); 
+		Coffee[] c = newcm.getListCoffee(); 
+		favorite_coffee = c[Service.generateValue(c.length - 1)]; 
 		this.admin = admin;
 	}
 	
-	boolean buy() {
-		Coffee c = getCoffee();
-		if (getMoney() >= c.cost) {
-			money -= c.cost;
+	Person (int m) { // для тестов/ указывается  кол-во денег
+		name = list_name[Service.generateValue(list_name.length - 1)];
+		money = m;
+		newcm = newcm.getCM(); 
+		Coffee[] c = newcm.getListCoffee(); 
+		favorite_coffee = c[Service.generateValue(c.length - 1)]; 
+		this.admin = admin;
+	}
+	
+	void buy() throws USErr{
+		//Coffee c = getCoffee;
+		if (getMoney() >= favorite_coffee.cost) {
+			System.out.println("TEST/METH BUY!");
+			money -= favorite_coffee.cost;
 			System.out.println(name + " has " + money);
-			lastdebt += c.cost;
-			return true;
-		}
-		return false;
+			lastdebt += favorite_coffee.cost;
+		} else throw new USErr(1);
 	}
 	
 	
@@ -49,9 +62,14 @@ class Person {
 		return admin;
 	}
 	
-	void setLastDebt(int i) {
-		lastdebt -= i;
+	void add_money(int i) {
+		//System.out.println("TEST/METH ADD_MONEY!");
+		lastdebt = 0;
 		money += i;
+	}
+	
+	void getDataAboutPerson() {
+		System.out.println("Data: \n" + "Name: " + getName() + "\n" + "Money: " + getMoney() + "\n" + "Type of coffee: " + favorite_coffee.getType());
 	}
 	
 	/*

@@ -6,6 +6,7 @@ class Coffee {
 	int cost;
 	int sugar = 0;
 	
+	
 	Coffee(String t, int m, int ce, int ct) {
 		type = t;
 		milk = m;
