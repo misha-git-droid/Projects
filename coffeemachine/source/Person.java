@@ -13,20 +13,20 @@ class Person {
 	String[] list_name = {"Derek", "Alice", "Andrew", "Carol", "James", "Alex"};
 	
 	Person () {
-		name = list_name[Service.generateValue(list_name.length - 1)];
+		name = list_name[Service.generateValue(list_name.length)];
 		money = Service.generateValue(350);
 		newcm = newcm.getCM(); 
 		Coffee[] c = newcm.getListCoffee(); 
-		favorite_coffee = c[Service.generateValue(c.length - 1)]; 
+		favorite_coffee = c[Service.generateValue(c.length)]; 
 		this.admin = admin;
 	}
 	
 	Person (int m) { // для тестов/ указывается  кол-во денег
-		name = list_name[Service.generateValue(list_name.length - 1)];
+		name = list_name[Service.generateValue(list_name.length)];
 		money = m;
 		newcm = newcm.getCM(); 
 		Coffee[] c = newcm.getListCoffee(); 
-		favorite_coffee = c[Service.generateValue(c.length - 1)]; 
+		favorite_coffee = c[Service.generateValue(c.length)]; 
 		this.admin = admin;
 	}
 	
