@@ -52,7 +52,7 @@ class CoffeeMachine implements UI, Service {
 	public void cooking_coffee(Person person) {
 		Coffee c = person.getCoffee();
 		try {
-			if ((c.milk > milk) | (c.coffee > coffee)) {
+			if ((c.milk > milk) || (c.coffee > coffee)) {
 				throw new CMErr(2);
 			}
 		}
@@ -70,7 +70,11 @@ class CoffeeMachine implements UI, Service {
 			return;
 		}
 		
+		coffee -= c.coffee;
+		milk -= c.milk;
 		System.out.println("Making a drink...");
+		System.out.println("In the coffeemachine coffee: " + coffee +
+							" milk: " + milk);
 		
 		// в дальнейшем сделать проверку на работоспособность аппарата, коды ошибок аппарата 
 	}
