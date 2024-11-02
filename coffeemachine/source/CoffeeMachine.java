@@ -27,9 +27,10 @@ class CoffeeMachine implements UI, Service {
 	public static void main (String [] args) {
 		cm = new CoffeeMachine();
 		//cm.go();
+		
+		//setup of person
 		Person p = new Person(100);
 		p.getDataAboutPerson(); 
-		Coffee c = cm.choose_coffee(p);
 		cm.cooking_coffee(p);
 	}
 	
@@ -45,7 +46,7 @@ class CoffeeMachine implements UI, Service {
 	}
 	
 	public void cooking_coffee(Person person) {
-		Coffee c = person.getCoffee();
+		Coffee c = choose_coffee(person); 
 		//проверка на достаточность ингредиентов
 		try {
 			if ((c.milk > milk) || (c.coffee > coffee)) {
