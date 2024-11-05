@@ -1,11 +1,11 @@
-class Stack {
+class Stack<T> {
 
-	Stack(int size) {
-		arr = new char[size];
-	}
-
-	private char[] arr;
+	private T[] arr;
 	private int putloc, getloc = 0;
+
+	public Stack(T[] arrs) {
+		arr = arrs;
+	}
 	
 	
 	//get size array
@@ -14,7 +14,7 @@ class Stack {
 	}
 	
 	// add the element in queue
-	void push(char ch) {
+	void push(T ch) {
 		if (putloc == arr.length)  {
 			System.out.println("Queue is full");
 			return;
@@ -37,7 +37,8 @@ class Stack {
 
 class DemoStack {
 	public static void main (String [] args) {
-		Stack s = new Stack(10);
+		
+		Stack<Character> s = new Stack<>(new Character[10]);
 		
 		int count = 0;
 		for (int i = 'a'; count < s.getSize(); i++) {
@@ -48,6 +49,20 @@ class DemoStack {
 		for (int i = 0; i < s.getSize(); i++) {
 			s.pop();
 			count++;
-		}	
+		}
+		
+		count = 0; обнулить переменную перед созданием нового стека 
+		
+		Stack<Integer> iNt = new Stack<>(new Integer[10]);
+		
+		for (int i = 1; count < iNt.getSize(); i++) {
+			iNt.push(i);
+			count++;
+		}
+		
+		for (int i = 0; i < iNt.getSize(); i++) {
+			iNt.pop();
+			count++;
+		}
 	}
 }
